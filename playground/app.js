@@ -18,6 +18,12 @@ import "codemirror/theme/solarized.css";
 import "codemirror/theme/monokai.css";
 import "codemirror/theme/eclipse.css";
 
+import { allWidgets, fabricFields } from "fabric-react-jsonschema-form";
+import "office-ui-fabric-core/dist/css/fabric.min.css";
+import { initializeIcons } from "@uifabric/icons";
+
+initializeIcons();
+
 const log = type => console.log.bind(console, type);
 const fromJson = json => JSON.parse(json);
 const toJson = val => JSON.stringify(val, null, 2);
@@ -266,6 +272,8 @@ function ThemeSelector({ theme, select }) {
   };
   return (
     <Form
+      widgets={allWidgets}
+      {...fabricFields}
       schema={themeSchema}
       formData={theme}
       onChange={({ formData }) => select(formData, themes[formData])}>
@@ -400,8 +408,6 @@ class App extends Component {
       validate,
       theme,
       editor,
-      ArrayFieldTemplate,
-      ObjectFieldTemplate,
       transformErrors,
     } = this.state;
 
@@ -415,6 +421,8 @@ class App extends Component {
             </div>
             <div className="col-sm-2">
               <Form
+                widgets={allWidgets}
+                {...fabricFields}
                 schema={liveValidateSchema}
                 formData={liveValidate}
                 onChange={this.setLiveValidate}>
@@ -455,8 +463,8 @@ class App extends Component {
         <div className="col-sm-5">
           {this.state.form && (
             <Form
-              ArrayFieldTemplate={ArrayFieldTemplate}
-              ObjectFieldTemplate={ObjectFieldTemplate}
+              widgets={allWidgets}
+              {...fabricFields}
               liveValidate={liveValidate}
               schema={schema}
               uiSchema={uiSchema}
